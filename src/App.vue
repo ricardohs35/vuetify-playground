@@ -1,60 +1,64 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
+    <!-- Navbar -->
+    <v-app-bar app dark color="primary">
+      <v-toolbar-title>Vuetify Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-btn text rounded>Home</v-btn>
+      <v-btn text rounded>Login</v-btn>
     </v-app-bar>
 
+    <!-- content -->
     <v-content>
-      <HelloWorld/>
+      <Login />
     </v-content>
+
+    <!-- footer -->
+    <v-footer
+      color="primary lighten-1"
+      padless
+    >
+      <v-row
+        justify="center"
+        no-gutters
+      >
+        <v-btn
+          v-for="link in links"
+          :key="link"
+          color="white"
+          text
+          rounded
+          class="my-2"
+        >
+          {{ link }}
+        </v-btn>
+        <v-col
+          class="primary lighten-2 py-4 text-center white--text"
+          cols="12"
+        >
+          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        </v-col>
+      </v-row>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Login from './components/Login'
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Login
   },
 
   data: () => ({
-    //
+    links: [
+      'Home',
+      'Login'
+    ]
   }),
 };
 </script>
