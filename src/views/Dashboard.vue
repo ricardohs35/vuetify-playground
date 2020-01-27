@@ -1,54 +1,65 @@
 <template>
   <div>
+    <h1>Dashboard</h1>
 
-    <EmployeesTable
-      :employees="employees"
-      @select-employee="setEmployee"
+    <SalesGraph v-for="sale in sales" :key="`${sale.id}-${sale.title}`" :sale="sale" />
+
+    <StatisticCard
+      v-for="statistic in statistics"
+      :key="`${statistic.title}`"
+      :statistic="statistic"
     />
 
+    <EmployeesTable :employees="employees" @select-employee="setEmployee" />
+
+    <EventTimeline :timeline="timeline" />
+
     <v-snackbar v-model="snackbar">
-      You have selected {{ selectedEmployeeFulText }}
-      <v-btn
-        color="pink"
-        text
-        @click="snackbar = false"
-      >Close
+      You have selected {{ selectedEmployee.name }},
+      {{ selectedEmployee.title }}
+      <v-btn color="pink" text @click="snackbar = false">
+        Close
       </v-btn>
     </v-snackbar>
   </div>
 </template>
 
 <script>
-  import EmployeesTable from '../components/EmployeesTable'
-  import employees from '@/data/employees.json'
-
-  export default {
-    components: {
-      EmployeesTable
-    },
-
-    data () {
-      return {
-        selectedEmployee: {
-          name: '',
-          title: ''
-        },
-        snackbar: false,
-        employees
-      }
-    },
-
-    computed: {
-      selectedEmployeeFulText () {
-        return `${this.selectedEmployee.name} ${this.selectedEmployee.title}`
-      }
-    },
-
-    methods: {
-      setEmployee (employee) {
-        this.snackbar = true
-        this.selectedEmployee = employee
-      }
+import EmployeesTable from '../components/EmployeesTable'
+import EventTimeline from '../components/EventTimeline'
+import SalesGraph from '../components/SalesGraph'
+import StatisticCard from '../components/StatisticCard'
+import employeesData from '../data/employees.json'
+import timelineData from '../data/timeline.json'
+import salesData from '../data/sales.json'
+import statisticsData from '../data/statistics.json'
+export default {
+  name: 'DashboardPage',
+  components: {
+    EmployeesTable,
+    EventTimeline,
+    SalesGraph,
+    StatisticCard
+  },
+  data() {
+    return {
+      employees: employeesData,
+      sales: salesData,
+      selectedEmployee: {
+        name: '',
+        title: ''
+      },
+      snackbar: false,
+      statistics: statisticsData,
+      timeline: timelineData
+    }
+  },
+  methods: {
+    setEmployee(event) {
+      this.snackbar = true
+      this.selectedEmployee.name = event.name
+      this.selectedEmployee.title = event.title
     }
   }
+}
 </script>

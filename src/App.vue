@@ -1,57 +1,38 @@
 <template>
   <v-app>
-
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-
-
-    <!-- Navbar -->
-    <v-app-bar app dark color="primary">
+    <v-app-bar app color="primary" dark>
       <v-toolbar-title>Vuetify Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         v-for="link in links"
         :key="`${link.label}-header-link`"
-        :to="link.to"
         text
         rounded
-      >{{ link.label }}</v-btn>
-    </v-app-bar>
-
-    <!-- content -->
-    <v-content>
-      <router-view/>
-    </v-content>
-
-    <!-- footer -->
-    <v-footer
-      color="primary lighten-1"
-      padless
-    >
-      <v-row
-        justify="center"
-        no-gutters
+        :to="link.to"
       >
+        {{ link.label }}
+      </v-btn>
+    </v-app-bar>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+    <v-footer color="primary lighten-1" padless>
+      <v-layout justify-center wrap>
         <v-btn
           v-for="link in links"
-          :to="link.to"
           :key="`${link.label}-footer-link`"
           color="white"
           text
           rounded
           class="my-2"
+          :to="link.to"
         >
           {{ link.label }}
         </v-btn>
-        <v-col
-          class="primary lighten-2 py-4 text-center white--text"
-          cols="12"
-        >
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-        </v-col>
-      </v-row>
+        <v-flex primary lighten-2 py-4 text-center white--text xs12>
+          {{ new Date().getFullYear() }} — <strong>Vuetify Dashboard</strong>
+        </v-flex>
+      </v-layout>
     </v-footer>
   </v-app>
 </template>
@@ -59,7 +40,6 @@
 <script>
 export default {
   name: 'App',
-
   data: () => ({
     links: [
       {
@@ -75,6 +55,6 @@ export default {
         to: '/dashboard'
       }
     ]
-  }),
-};
+  })
+}
 </script>
