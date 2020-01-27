@@ -3,28 +3,28 @@
     <h1>Dashboard</h1>
 
     <v-row>
-      <v-col v-for="sale in sales" :key="`${sale.id}-${sale.title}`">
+      <v-col v-for="sale in sales" :key="`${sale.id}-${sale.title}`" cols="12" md="4">
         <SalesGraph :sale="sale" />
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col v-for="statistic in statistics" :key="`${statistic.title}`">
+      <v-col v-for="statistic in statistics" :key="`${statistic.title}`" cols="12" md="6" lg="3">
         <StatisticCard :statistic="statistic" />
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="8">
+      <v-col cols="12" md="8">
         <EmployeesTable :employees="employees" @select-employee="setEmployee" />
       </v-col>
 
-      <v-col cols="4">
+      <v-col cols="12" md="4">
         <EventTimeline :timeline="timeline" />
       </v-col>
     </v-row>
 
-    <v-snackbar v-model="snackbar">
+    <v-snackbar v-model="snackbar" :left="$vuetify.breakpoint.lgAndUp">
       You have selected {{ selectedEmployee.name }},
       {{ selectedEmployee.title }}
       <v-btn color="pink" text @click="snackbar = false">
@@ -43,6 +43,7 @@ import employeesData from '../data/employees.json'
 import timelineData from '../data/timeline.json'
 import salesData from '../data/sales.json'
 import statisticsData from '../data/statistics.json'
+
 export default {
   name: 'DashboardPage',
   components: {
@@ -51,6 +52,7 @@ export default {
     SalesGraph,
     StatisticCard
   },
+
   data() {
     return {
       employees: employeesData,
@@ -64,6 +66,7 @@ export default {
       timeline: timelineData
     }
   },
+
   methods: {
     setEmployee(event) {
       this.snackbar = true
