@@ -1,17 +1,28 @@
 <template>
   <v-app>
 
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+
+
     <!-- Navbar -->
     <v-app-bar app dark color="primary">
       <v-toolbar-title>Vuetify Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text rounded>Home</v-btn>
-      <v-btn text rounded>Login</v-btn>
+      <v-btn
+        v-for="link in links"
+        :key="`${link.label}-header-link`"
+        :to="link.to"
+        text
+        rounded
+      >{{ link.label }}</v-btn>
     </v-app-bar>
 
     <!-- content -->
     <v-content>
-      <Login />
+      <router-view/>
     </v-content>
 
     <!-- footer -->
@@ -25,13 +36,14 @@
       >
         <v-btn
           v-for="link in links"
-          :key="link"
+          :to="link.to"
+          :key="`${link.label}-footer-link`"
           color="white"
           text
           rounded
           class="my-2"
         >
-          {{ link }}
+          {{ link.label }}
         </v-btn>
         <v-col
           class="primary lighten-2 py-4 text-center white--text"
@@ -45,19 +57,19 @@
 </template>
 
 <script>
-import Login from './components/Login'
-
 export default {
   name: 'App',
 
-  components: {
-    Login
-  },
-
   data: () => ({
     links: [
-      'Home',
-      'Login'
+      {
+        label: 'Home',
+        to: '/'
+      },
+      {
+        label: 'Login',
+        to: '/login'
+      }
     ]
   }),
 };
