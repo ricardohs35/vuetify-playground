@@ -1,15 +1,13 @@
 <template>
   <div>
-    <v-data-table
-      :headers="headers"
-      :items="employees"
-      :items-per-page="5"
-      class="elevation-1"
-      @click:row="selectRow"
-    ></v-data-table>
+
+    <EmployeesTable
+      :employees="employees"
+      @select-employee="setEmployee"
+    />
 
     <v-snackbar v-model="snackbar">
-      You have selected {{ currentItem }}
+      You have selected {{ selectedEmployeeFulText }}
       <v-btn
         color="pink"
         text
@@ -21,27 +19,35 @@
 </template>
 
 <script>
+  import EmployeesTable from '../components/EmployeesTable'
   import employees from '@/data/employees.json'
 
   export default {
+    components: {
+      EmployeesTable
+    },
+
     data () {
       return {
-        currentItem: '',
+        selectedEmployee: {
+          name: '',
+          title: ''
+        },
         snackbar: false,
-        headers: [
-          { text: 'ID', align: 'left', sortable: false, value: 'id' },
-          { text: 'Name', value: 'name' },
-          { text: 'Title', value: 'title' },
-          { text: 'Salary', value: 'salary' },
-        ],
         employees
       }
     },
 
+    computed: {
+      selectedEmployeeFulText () {
+        return `${this.selectedEmployee.name} ${this.selectedEmployee.title}`
+      }
+    },
+
     methods: {
-      selectRow (event) {
+      setEmployee (employee) {
         this.snackbar = true
-        this.currentItem = `${event.name} | ${event.title}`
+        this.selectedEmployee = employee
       }
     }
   }
