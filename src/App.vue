@@ -69,6 +69,10 @@ export default {
       {
         label: 'Login',
         to: '/login'
+      },
+      {
+        label: 'Dashboard',
+        to: '/dashboard'
       }
     ]
   }),
